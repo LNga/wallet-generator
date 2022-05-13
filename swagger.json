@@ -1,0 +1,87 @@
+{
+  "definitions": {
+    "newPlayer": {
+      "type": "object",
+      "properties": {
+        "userName": {
+          "type": "string"
+        },
+        "pwd": {
+          "type": "string"
+        },
+        "pin_code": {
+          "type": "string"
+        }
+      }
+    },
+    "playerCreated": {
+      "type": "object",
+      "properties": {
+        "userName": {
+          "type": "string"
+        },
+        "wallet_adress": {
+          "type": "string"
+        },
+        "currency_code": {
+          "type": "string"
+        },
+        "balance": {
+          "type": "string"
+        },
+        "pwd": {
+          "type": "string"
+        },
+        "pin_code": {
+          "type": "string"
+        }
+      }
+    }
+  },
+  "info": {
+    "title": "API Voodoo Wallet generator documentation",
+    "version": "1.0.0",
+    "license": {
+      "name": "ISC"
+    },
+    "description": "API for generating an Ethereum wallet when a player creates its Voodoo account"
+  },
+  "basePath": "/api/v1",
+  "host": "localhost:3000",
+  "schemes": ["http"],
+  "consumes": ["application/json"],
+  "produces": ["application/json"],
+  "paths": {
+    "/players/create": {
+      "post": {
+        "summary": "/players/create",
+        "consumes": ["application/json"],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "new player",
+            "required": true,
+            "schema": { "$ref": "#/definitions/newPlayer" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": { "$ref": "#/definitions/playerCreated" }
+          },
+
+          "400": { "description": "Failed. Bad inputs" }
+        },
+        "tags": ["players"]
+      }
+    }
+  },
+  "swagger": "2.0",
+  "tags": [
+    {
+      "name": "players",
+      "description": "Method to create a new player along with its wallet"
+    }
+  ]
+}

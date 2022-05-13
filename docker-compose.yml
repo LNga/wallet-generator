@@ -1,0 +1,23 @@
+version: '3.8'
+services:
+  db:
+    image: 'postgres'
+    ports:
+      - '5432:5432'
+    environment:
+      POSTGRES_USER: 'postgres'
+      POSTGRES_PASSWORD: 'voodoo'
+      POSTGRES_DB: 'db'
+    volumes:
+      - './pgdata:/var/lib/postgresql/data'
+  api:
+    image: 'blockchain-backend-api'
+    depends_on:
+      - 'db'
+    build: .
+    ports:
+      - '3000:3000'
+    command: bash -c 'while !</dev/tcp/db/5432; do sleep 1; done; npm start'
+    environment:
+      - DATABASE_URL=postgres://postgres:voodoo@db:5432/db
+      - PORT=3000
